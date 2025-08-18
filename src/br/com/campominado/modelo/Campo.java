@@ -1,5 +1,7 @@
 package br.com.campominado.modelo;
 
+import br.com.campominado.excecao.ExplosaoException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,4 +40,30 @@ public class Campo {
         }
     }
 
+    void alterarMarcacao() {
+        if (!aberto) {
+            marcado = !marcado;
+        }
+    }
+
+    boolean abrir(){
+        if(!aberto && !marcado) {
+            aberto = true;
+            if(minado) {
+                throw new ExplosaoException();
+            }
+
+            if (vizinhacaSegura()) {
+                vizinhos.forEach(vizinho -> vizinho.abrir());
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean vizinhacaSegura() {
+        return vizinhos.stream().noneMatch(vizinho -> vizinho.minado);
+    }
 }
