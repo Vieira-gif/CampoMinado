@@ -24,7 +24,7 @@ public class Campo {
         boolean diagonal = linhaDiferente && colunaDiferente;
 
         int deltaLinha = Math.abs(linha - vizinho.linha);
-        int deltaColuna = Math.abs(linha - vizinho.linha);
+        int deltaColuna = Math.abs(coluna - vizinho.linha);
         int deltaGeral = deltaLinha + deltaColuna;
 
         if (deltaGeral == 1 && !diagonal) {
