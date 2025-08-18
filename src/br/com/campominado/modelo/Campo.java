@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Campo {
-    private boolean minado = false;
-    private boolean ativo = false;
-    private boolean marcado = false;
-
     private final int linha;
     private final int coluna;
+
+    private boolean aberto = false;
+    private boolean minado = false;
+    private boolean marcado = false;
 
     private List<Campo> vizinhos = new ArrayList<>();
 
@@ -24,13 +24,13 @@ public class Campo {
         boolean diagonal = linhaDiferente && colunaDiferente;
 
         int deltaLinha = Math.abs(linha - vizinho.linha);
-        int deltaColuna = Math.abs(coluna - vizinho.linha);
-        int deltaGeral = deltaLinha + deltaColuna;
+        int deltaColuna = Math.abs(coluna - vizinho.coluna);
+        int deltaGeral = deltaColuna + deltaLinha;
 
-        if (deltaGeral == 1 && !diagonal) {
+        if(deltaGeral == 1 && !diagonal) {
             vizinhos.add(vizinho);
             return true;
-        } else if (deltaGeral == 2 && diagonal) {
+        } else if(deltaGeral == 2 && diagonal) {
             vizinhos.add(vizinho);
             return true;
         } else {
