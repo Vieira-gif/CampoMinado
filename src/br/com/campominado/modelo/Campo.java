@@ -79,7 +79,7 @@ public class Campo {
         return aberto;
     }
 
-    public boolean isAMinado() {
+    public boolean isMinado() {
         return minado;
     }
 
