@@ -32,11 +32,14 @@ public class Tabuleiro {
     }
 
     private void sortearMinas() {
-        for (int linha = 0; linha < this.linhas; linha++) {
-            for (int coluna = 0; coluna < colunas; coluna++) {
-                campos.add(new Campo(linha, coluna));
-            }
-        }
+        long minasArmadas = 0;
+        Predicate<Campo> minado = c -> c.isMinado();
+
+        do {
+            int aleatorio = (int) (Math.random() * campos.size());
+            campos.get(aleatorio).minar();
+            minasArmadas = campos.stream().filter(minado).count();
+        } while(minasArmadas < minas);
     }
 
     private void associarOsVizinhos() {
@@ -48,23 +51,19 @@ public class Tabuleiro {
     }
 
     private void gerarCampos() {
-        long minasArmadas = 0;
-
-        Predicate<Campo> minado = Campo::isAMinado;
-
-        do {
-            minasArmadas = campos.stream().filter(minado).count();
-            int aleatorio = (int) (Math.random() * campos.size());
-            campos.get(aleatorio).minar();
-        }while (minasArmadas < minas);
+        for (int linha = 0; linha < linhas; linha++) {
+            for (int coluna = 0; coluna < colunas; coluna++) {
+                campos.add(new Campo(linha, coluna));
+            }
+        }
     }
 
     public boolean objetivoAlcancado(){
-        return campos.stream().allMatch(c -> c.objetivoAlcancado());
+        return campos.stream().allMatch(Campo::objetivoAlcancado);
     }
 
     public void reiniciar() {
-        campos.stream().forEach(c -> c.reiniciar());
+        campos.forEach(Campo::reiniciar);
         sortearMinas();
     }
 
