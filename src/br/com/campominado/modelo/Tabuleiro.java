@@ -2,6 +2,7 @@ package br.com.campominado.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Tabuleiro {
     private int linhas;
@@ -21,9 +22,9 @@ public class Tabuleiro {
     }
 
     private void sortearMinas() {
-        for (int linhas = 0; linhas < this.linhas; linhas++) {
+        for (int linha = 0; linha < this.linhas; linha++) {
             for (int coluna = 0; coluna < colunas; coluna++) {
-                campos.add(new Campo(linhas, coluna));
+                campos.add(new Campo(linha, coluna));
             }
         }
     }
@@ -37,5 +38,14 @@ public class Tabuleiro {
     }
 
     private void gerarCampos() {
+        long minasArmadas = 0;
+
+        Predicate<Campo> minado = Campo::isAMinado;
+
+        do {
+            minasArmadas = campos.stream().filter(minado).count();
+            int aleatorio = 1;
+            campos.get(aleatorio).minar();
+        }while (minasArmadas < minas);
     }
 }
