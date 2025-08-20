@@ -22,8 +22,9 @@ public class Tabuleiro {
     }
 
     public void abrir(int linha, int coluna) {
-        campos.parallelStream()
-                .filter(c -> c.getLinha() == linha && c.getColuna() == coluna).findFirst().ifPresent(c -> c.abrir());
+        try {
+
+        }catch (Expl)
     }
 
     public void marcar(int linha, int coluna) {
